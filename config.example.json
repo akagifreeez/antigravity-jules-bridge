@@ -1,0 +1,6 @@
+{
+  "jules_api_key": "YOUR_API_KEY_HERE",
+  "polling_interval_seconds": 30,
+  "require_plan_approval": true,
+  "history_path": ".jules_history.json"
+}
