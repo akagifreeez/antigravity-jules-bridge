@@ -215,7 +215,11 @@ def find_jules_branch(repo_path: Optional[str] = None, session_id: Optional[str]
     """
     Julesが作成したブランチを検索
     
-    Jules は通常 'jules/' プレフィックスのブランチを作成する
+    Julesは様々な形式のブランチ名を作成するため、
+    以下の優先順位で検索:
+    1. セッションIDに一致するブランチ
+    2. 'jules/' または 'jules-' を含むブランチ
+    3. main/master以外の最新ブランチ（PRブランチと想定）
     
     Args:
         repo_path: リポジトリパス
@@ -229,18 +233,25 @@ def find_jules_branch(repo_path: Optional[str] = None, session_id: Optional[str]
     
     branches = get_remote_branches(repo_path)
     
-    # jules/ プレフィックスのブランチを検索
-    jules_branches = [b for b in branches if "jules/" in b.lower() or "jules-" in b.lower()]
+    # main/master を除外したブランチリスト
+    non_main_branches = [b for b in branches if not any(
+        main in b.lower() for main in ['origin/main', 'origin/master', 'origin/head']
+    )]
     
+    # セッションIDに一致するブランチを検索
     if session_id:
-        # セッションIDに一致するブランチを優先
-        for branch in jules_branches:
+        for branch in non_main_branches:
             if session_id in branch:
                 return branch
     
-    # 最新のjulesブランチを返す（最後に作成されたと仮定）
+    # jules/ プレフィックスのブランチを検索
+    jules_branches = [b for b in non_main_branches if "jules/" in b.lower() or "jules-" in b.lower()]
     if jules_branches:
         return jules_branches[-1]
+    
+    # main以外の最新ブランチを返す（PRブランチと想定）
+    if non_main_branches:
+        return non_main_branches[-1]
     
     return None
 

@@ -180,7 +180,7 @@ class JulesClient:
     def _get_headers(self) -> Dict[str, str]:
         """APIリクエスト用ヘッダーを取得"""
         return {
-            "Authorization": f"Bearer {self.api_key}",
+            "X-Goog-Api-Key": self.api_key,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
