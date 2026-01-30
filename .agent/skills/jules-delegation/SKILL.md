@@ -60,10 +60,11 @@ Julesからの結果を受け取ったら：
 
 ```json
 {
-  "jules_api_key": "YOUR_API_KEY",
-  "github_repo": "owner/repo"
+  "jules_api_key": "YOUR_API_KEY"
 }
 ```
+
+※ リポジトリとブランチは自動検出されます
 
 ## スクリプト
 
