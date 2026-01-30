@@ -1,5 +1,7 @@
 # antigravity-jules-bridge
 
+✅ API Verified
+
 **Antigravity から Jules へのタスク委任ブリッジ**
 
 AIコーディングアシスタント間の作業分担を自動化し、レート制限を回避しながら効率的なコード生成を実現します。
